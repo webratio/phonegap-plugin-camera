@@ -436,7 +436,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
 
 private String ouputModifiedBitmap(Bitmap bitmap, Uri uri) throws IOException {
         // Create an ExifHelper to save the exif data that is lost during compression
-        String modifiedPath = getTempDirectoryPath() + "/modified.jpg";
+        String modifiedPath = getTempDirectoryPath() + "/" + System.currentTimeMillis() + "_modified.jpg";
 
         OutputStream os = new FileOutputStream(modifiedPath);
         bitmap.compress(Bitmap.CompressFormat.JPEG, this.mQuality, os);
