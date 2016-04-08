@@ -623,7 +623,7 @@ private String ouputModifiedBitmap(Bitmap bitmap, Uri uri) throws IOException {
         // If you ask for video or all media type you will automatically get back a file URI
         // and there will be no attempt to resize any returned data
         if (this.mediaType != PICTURE) {
-            this.callbackContext.success(fileLocation);
+            this.callbackContext.success(uri.toString());
         }
         else {
             // This is a special case to just return the path as no scaling,
@@ -702,7 +702,7 @@ private String ouputModifiedBitmap(Bitmap bitmap, Uri uri) throws IOException {
                         } catch (Throwable t) {
                             // ignores exceptions
                         }
-                        this.callbackContext.success(fileLocation);
+                        this.callbackContext.success(uri.toString());
                     }
                 }
                 if (bitmap != null) {
