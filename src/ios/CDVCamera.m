@@ -354,6 +354,13 @@ static NSString* toBase64(NSData* data) {
 {
     NSData* data = nil;
 
+    NSString *mimeType = [self contentTypeForImage:image];
+    if ([mimeType isEqualToString:@"image/jpeg"]){
+        options.encodingType = EncodingTypeJPEG;
+    } else if ([mimeType isEqualToString:@"image/png"]){
+        options.encodingType = EncodingTypePNG;
+    }
+
     switch (options.encodingType) {
         case EncodingTypePNG:
             data = UIImagePNGRepresentation(image);
@@ -507,6 +514,16 @@ static NSString* toBase64(NSData* data) {
     }
 
     completion(result);
+}
+
+- (NSString *)contentTypeForImage:(UIImage *)image {
+    // There is no way to get the actual raw stream of bytes to properly carry out the image type by looking at the magic bytes. 
+    // So the only educated guess is to consider the presence of an alpha channel to tell whether the image is a PNG or JPEG.
+    CGImageAlphaInfo imageAlpha = CGImageGetAlphaInfo(image.CGImage);
+    if (imageAlpha == kCGImageAlphaNoneSkipLast || imageAlpha == kCGImageAlphaNoneSkipFirst || imageAlpha == kCGImageAlphaNone){
+        return @"image/jpeg";
+    }
+    return @"image/png";
 }
 
 - (CDVPluginResult*)resultForVideo:(NSDictionary*)info

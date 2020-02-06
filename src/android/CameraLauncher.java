@@ -699,6 +699,13 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
         }
         else {
 
+            if  (mimeType.equalsIgnoreCase(getMimetypeForFormat(JPEG))){
+                encodingType = JPEG;
+            }
+            if  (mimeType.equalsIgnoreCase(getMimetypeForFormat(PNG))){
+                encodingType = PNG;
+            }
+
             // This is a special case to just return the path as no scaling,
             // rotating, nor compressing needs to be done
             if (this.targetHeight == -1 && this.targetWidth == -1 &&
