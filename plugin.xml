@@ -94,6 +94,22 @@
              <preference name="CameraUsesGeolocation" value="false" />
          </config-file>
 
+         <config-file target="*-Info.plist" parent="NSCameraUsageDescription" mode="merge">
+             <string>need camera access to take pictures</string>
+         </config-file>
+
+         <config-file parent="NSPhotoLibraryUsageDescription" target="*-Info.plist" mode="merge">
+             <string>need to photo library access to get pictures from there</string>
+         </config-file>
+
+         <config-file parent="NSLocationWhenInUseUsageDescription" target="*-Info.plist" mode="merge">
+             <string>need location access to find things nearby</string>
+         </config-file>
+
+         <config-file parent="NSPhotoLibraryAddUsageDescription" target="*-Info.plist" mode="merge">
+             <string>need to photo library access to save pictures there</string>
+         </config-file>
+
          <js-module src="www/ios/CameraPopoverHandle.js" name="CameraPopoverHandle">
             <clobbers target="CameraPopoverHandle" />
          </js-module>
