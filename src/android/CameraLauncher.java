@@ -742,7 +742,20 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
                             this.failPicture("Error retrieving image.");
                         }
                     } else {
-                        this.callbackContext.success(fileLocation);
+                        // Tries to compute an URI pointing to the real file in order to allow file name preservation.
+                        try {
+                            File file = getRealFile(uri.toString());
+                            if (file == null && uri.toString().startsWith("content://com.android.providers.media.documents/")) {
+                                String imageId = uri.toString().split("%3A")[1];
+                                file = getRealFile("content://media/external/images/media/" + imageId);
+                            }
+                            if (file != null) {
+                                uri = Uri.fromFile(file);
+                            }
+                        } catch (Throwable t) {
+                            // ignores exceptions
+                        }
+                        this.callbackContext.success(uri.toString());
                     }
                 }
                 if (bitmap != null) {
@@ -752,6 +765,21 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
                 System.gc();
             }
         }
+    }
+
+    private File getRealFile(String uri) {
+        try {
+            String realPath = FileHelper.getRealPath(uri, this.cordova);
+            if (realPath != null) {
+                File file = new File(realPath);
+                if (file.exists()) {
+                    return file;
+                }
+            }
+        } catch (Throwable t) {
+            // ignores exceptions
+        }
+        return null;
     }
 
     /**
