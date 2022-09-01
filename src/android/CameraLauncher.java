@@ -695,7 +695,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
         // If you ask for video or the selected file doesn't have JPEG or PNG mime type
         //  there will be no attempt to resize any returned data
         if (this.mediaType == VIDEO || !(JPEG_MIME_TYPE.equalsIgnoreCase(mimeType) || PNG_MIME_TYPE.equalsIgnoreCase(mimeType))) {
-            this.callbackContext.success(fileLocation);
+            this.callbackContext.success(uri.toString());
         }
         else {
 
