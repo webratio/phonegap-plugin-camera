@@ -241,7 +241,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
         for(int i = 0; i < permissions.length; i++){
             array[i] = permissions[i];
         }
-        array[permissions.length + 1] = newPermission;
+        array[permissions.length] = newPermission;
         return array;
     }
 
